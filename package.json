@@ -22,7 +22,6 @@
     "template"
   ],
   "dependencies": {
-    "coffee-script": "*",
     "gulp-util": "*",
     "spawn-cmd": "0.0.2",
     "through2": "*"
@@ -30,8 +29,7 @@
   "devDependencies": {
     "should": "*",
     "mocha": "*",
-    "gulp": "*",
-    "gulp-coffee": "*"
+    "gulp": "*"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --compilers coffee:coffee-script --require coffee-script/register -R spec"
