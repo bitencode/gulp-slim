@@ -1,11 +1,13 @@
 (function() {
-  var PLUGIN_NAME, PluginError, gutil, spawn, through;
+  var PLUGIN_NAME, PluginError, gutil, path, spawn, through;
 
   spawn = require('spawn-cmd').spawn;
 
   through = require('through2');
 
   gutil = require('gulp-util');
+
+  path = require('path');
 
   PluginError = gutil.PluginError;
 
@@ -64,7 +66,7 @@
       }
     }
     return through.obj(function(file, encoding, callback) {
-      var b, eb, ext, original_file_path, program;
+      var b, eb, ext, original_file_path, program, programOpts;
       if (file.isNull()) {
         return callback(null, file);
       }
@@ -74,7 +76,11 @@
       original_file_path = file.path;
       ext = options.erb ? '.erb' : '.html';
       file.path = gutil.replaceExtension(file.path, ext);
-      program = spawn(cmnd, args);
+      programOpts = {};
+      if (options.chdir) {
+        programOpts.cwd = path.dirname(file.path);
+      }
+      program = spawn(cmnd, args, programOpts);
       b = new Buffer(0);
       eb = new Buffer(0);
       program.stdout.on('readable', function() {
