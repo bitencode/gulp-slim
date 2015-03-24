@@ -38,10 +38,16 @@
       args.push('--rails');
     }
     if (options.translator) {
-      args.push('-t');
+      args.push('-r');
+      args.push('slim/translator');
     }
     if (options.logicLess) {
-      args.push('-l');
+      args.push('-r');
+      args.push('slim/logic_less');
+    }
+    if (options.data) {
+      args.push('--locals');
+      args.push(JSON.stringify(options.data));
     }
     if (options.require) {
       if (options.require.constructor === Array) {
